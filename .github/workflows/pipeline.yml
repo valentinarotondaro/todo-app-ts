@@ -1,0 +1,71 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    container:
+      image: node
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build website
+        run: npm run build -- --base=./
+
+      - name: Store artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: todo
+          path: |
+            dist/
+            test/
+  delivery:
+    needs: integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: todo
+
+      - name: FTP delivery
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ vars.SUBDOMAIN }}/test/
+          local-dir: dist/
+
+      - name: Install TestCafe
+        run: npm install -g testcafe
+
+      - name: Run tests
+        run: testcafe chrome:headless test/e2e/* --browser-init-timeout 60000
+
+  deployment:
+    needs: delivery
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: todo
+
+      - name: FTP deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ vars.SUBDOMAIN }}/live/
+          local-dir: dist/
