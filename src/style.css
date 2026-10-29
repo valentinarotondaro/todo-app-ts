@@ -108,3 +108,13 @@ h1 {
   color: #d93025;
   font-weight: bold;
 }
+
+/* Keep the form inside the box after adding the date input */
+.todo-form input {
+  min-width: 0;
+}
+
+.todo-form #due-date-input {
+  flex: 0 0 auto;
+  width: 9.5rem;
+}
