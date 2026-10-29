@@ -6,6 +6,7 @@ import { renderTodos } from './render';
 const todoInput = document.getElementById('todo-input') as HTMLInputElement;
 const todoForm = document.querySelector('.todo-form') as HTMLFormElement;
 const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
+const dueDateInput = document.getElementById('due-date-input') as HTMLInputElement;
 
 // Form submit: validate the input, add the todo and update the list.
 todoForm.addEventListener('submit', (event: Event) => {
@@ -15,9 +16,10 @@ todoForm.addEventListener('submit', (event: Event) => {
   if (text !== '') {
     todoInput.classList.remove('input-error');
     errorMessage.style.display = 'none';
-    addTodo(text);
+        addTodo(text, dueDateInput.value || undefined);
     renderTodos();
     todoInput.value = '';
+    dueDateInput.value = '';
   } else {
     todoInput.classList.add('input-error');
     errorMessage.style.display = 'block';

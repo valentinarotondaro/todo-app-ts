@@ -93,3 +93,28 @@ h1 {
   margin-top: 5px;
   display: none;
 }
+/* === Due date (Alexa) === */
+.due-date {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  color: #666;
+}
+
+.todo-item.due-overdue {
+  border-left: 4px solid #d93025;
+}
+
+.todo-item.due-overdue .due-date {
+  color: #d93025;
+  font-weight: bold;
+}
+
+/* Keep the form inside the box after adding the date input */
+.todo-form input {
+  min-width: 0;
+}
+
+.todo-form #due-date-input {
+  flex: 0 0 auto;
+  width: 9.5rem;
+}

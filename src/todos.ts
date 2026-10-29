@@ -4,11 +4,13 @@ import { loadTodos, saveTodos } from './storage';
 export let todos: Todo[] = loadTodos();
 
 // Creates a new todo and adds it to the list.
-export const addTodo = (text: string): Todo => {
+// dueDate is optional: a todo can have no due date.
+export const addTodo = (text: string, dueDate?: string): Todo => {
   const newTodo: Todo = {
     id: Date.now(), // Unique id based on the current timestamp
     text: text,
     completed: false,
+    dueDate: dueDate,
   };
   todos.push(newTodo);
     saveTodos(todos);
