@@ -1,5 +1,6 @@
 import './style.css';
-import { addTodo } from './todos';
+import { addTodo, todos } from './todos';
+import { validateTodoText } from './features/validation';
 import { renderTodos } from './render';
 
 // References to the HTML elements (DOM + typecasting)
@@ -9,18 +10,21 @@ const errorMessage = document.getElementById('error-message') as HTMLParagraphEl
 const dueDateInput = document.getElementById('due-date-input') as HTMLInputElement;
 
 // Form submit: validate the input, add the todo and update the list.
+// Form submit: validate the input, add the todo and update the list.
 todoForm.addEventListener('submit', (event: Event) => {
   event.preventDefault();
   const text = todoInput.value.trim();
+  const result = validateTodoText(text, todos);
 
-  if (text !== '') {
+  if (result.valid) {
     todoInput.classList.remove('input-error');
     errorMessage.style.display = 'none';
-        addTodo(text, dueDateInput.value || undefined);
+    addTodo(text, dueDateInput.value || undefined);
     renderTodos();
     todoInput.value = '';
     dueDateInput.value = '';
   } else {
+    errorMessage.textContent = result.message;
     todoInput.classList.add('input-error');
     errorMessage.style.display = 'block';
   }
