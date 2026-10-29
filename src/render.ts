@@ -1,4 +1,5 @@
 import { todos, removeTodo, editTodo } from './todos';
+import { getDueStatus } from './features/dueDate';
 
 // Reference to the list in index.html (DOM + typecasting)
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
@@ -8,10 +9,12 @@ export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
   todos.forEach(todo => {
-    const li = document.createElement('li');
-    li.className = 'todo-item';
+        const li = document.createElement('li');
+    const status = getDueStatus(todo);
+    li.className = `todo-item due-${status}`;
     li.innerHTML = `
       <span>${todo.text}</span>
+      ${todo.dueDate ? `<small class="due-date">Due: ${todo.dueDate}${status === 'overdue' ? ' (overdue)' : ''}</small>` : ''}
       <button>Remove</button>
       <button id="editBtn">Edit</button>
     `;
