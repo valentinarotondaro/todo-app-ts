@@ -1,5 +1,7 @@
 import { todos, removeTodo, editTodo } from './todos';
 import { getDueStatus } from './features/dueDate';
+import { toggleTodo } from './features/toggle';
+
 
 // Reference to the list in index.html (DOM + typecasting)
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
@@ -11,8 +13,9 @@ export const renderTodos = (): void => {
   todos.forEach(todo => {
         const li = document.createElement('li');
     const status = getDueStatus(todo);
-    li.className = `todo-item due-${status}`;
+        li.className = `todo-item due-${status}${todo.completed ? ' completed' : ''}`;
     li.innerHTML = `
+          <input type="checkbox" class="toggle" ${todo.completed ? 'checked' : ''} />
       <span>${todo.text}</span>
       ${todo.dueDate ? `<small class="due-date">Due: ${todo.dueDate}${status === 'overdue' ? ' (overdue)' : ''}</small>` : ''}
       <button>Remove</button>
@@ -20,6 +23,7 @@ export const renderTodos = (): void => {
     `;
     addRemoveButtonListener(li, todo.id);
     addEditButtonListener(li, todo.id);
+        addToggleListener(li, todo.id);
     todoList.appendChild(li);
   });
 };
@@ -44,5 +48,13 @@ const addEditButtonListener = (li: HTMLLIElement, id: number): void => {
       editTodo(id, text);
       renderTodos();
     }
+  });
+};
+// Connects the checkbox of one list item.
+const addToggleListener = (li: HTMLLIElement, id: number): void => {
+  const checkbox = li.querySelector('.toggle') as HTMLInputElement;
+  checkbox.addEventListener('change', () => {
+    toggleTodo(id);
+    renderTodos();
   });
 };
