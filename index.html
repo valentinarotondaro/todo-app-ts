@@ -12,9 +12,16 @@
       <form class="todo-form">
         <input type="text" id="todo-input" placeholder="Add a new todo" />
         <input type="date" id="due-date-input" />
+        <select id="category-input" aria-label="Category">
+  <option value="work">Work</option>
+  <option value="personal" selected>Personal</option>
+  <option value="study">Study</option>
+  <option value="home">Home</option>
+</select>
         <button type="submit">Add</button>
       </form>
       <p id="error-message">Please enter a todo item</p>
+      <div id="category-filter" class="category-filter"></div>
       <ul class="todo-list" id="todo-list"></ul>
 
       <input type="color" id="colorPicker" />
