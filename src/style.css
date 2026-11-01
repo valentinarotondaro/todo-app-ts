@@ -224,3 +224,20 @@ h1 {
   background: transparent;
   color: #999;
 }
+
+/* Priority dropdown: same look as the category dropdown */
+#priority-input {
+  height: 44px;
+  border: 1px solid #e2e0da;
+  border-radius: 12px;
+  padding: 0 10px;
+  font: inherit;
+  background: #fff;
+  flex: 1 1 0;
+  width: auto;
+}
+
+/* Give the date input a bit more space so the full date is readable */
+.todo-form #due-date-input {
+  flex: 1.4 1 0;
+}
