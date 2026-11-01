@@ -118,7 +118,11 @@ h1 {
   flex: 0 0 auto;
   width: 9.5rem;
 }
-
+/* === Toggle (Valen) === */
+.todo-item.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
 /* === Categories (Valen) === */
 #category-input {
   height: 44px;

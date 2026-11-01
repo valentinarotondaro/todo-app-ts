@@ -1,5 +1,6 @@
 import { todos, removeTodo, editTodo } from './todos';
 import { getDueStatus } from './features/dueDate';
+import { toggleTodo } from './features/toggle';
 import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setActiveCategory } from './features/categories';
 import type { CategoryFilter } from './features/categories';
 
@@ -14,20 +15,22 @@ const label = (text: string): string => text.charAt(0).toUpperCase() + text.slic
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
-    renderCategoryFilter();
+  renderCategoryFilter();
   filterByCategory(todos, getActiveCategory()).forEach(todo => {
-        const li = document.createElement('li');
+    const li = document.createElement('li');
     const status = getDueStatus(todo);
-        li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'}`;
+    li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'}${todo.completed ? ' completed' : ''}`;
     li.innerHTML = `
+      <input type="checkbox" class="toggle" ${todo.completed ? 'checked' : ''} />
       <span>${todo.text}</span>
-            <small class="category-tag">${label(todo.category ?? 'personal')}</small>
+      <small class="category-tag">${label(todo.category ?? 'personal')}</small>
       ${todo.dueDate ? `<small class="due-date">Due: ${todo.dueDate}${status === 'overdue' ? ' (overdue)' : ''}</small>` : ''}
       <button>Remove</button>
       <button id="editBtn">Edit</button>
     `;
     addRemoveButtonListener(li, todo.id);
     addEditButtonListener(li, todo.id);
+    addToggleListener(li, todo.id);
     todoList.appendChild(li);
   });
 };
@@ -54,6 +57,16 @@ const addEditButtonListener = (li: HTMLLIElement, id: number): void => {
     }
   });
 };
+
+// Connects the checkbox of one list item.
+const addToggleListener = (li: HTMLLIElement, id: number): void => {
+  const checkbox = li.querySelector('.toggle') as HTMLInputElement;
+  checkbox.addEventListener('change', () => {
+    toggleTodo(id);
+    renderTodos();
+  });
+};
+
 // Draws the filter tabs: All + one per category, each with its number of todos.
 const renderCategoryFilter = (): void => {
   categoryFilter.innerHTML = '';
