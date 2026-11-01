@@ -3,10 +3,13 @@ import { getDueStatus } from './features/dueDate';
 import { toggleTodo } from './features/toggle';
 import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setActiveCategory } from './features/categories';
 import type { CategoryFilter } from './features/categories';
+import { STATUSES, filterByStatus, countByStatus, getActiveStatus, setActiveStatus } from './features/statusFilter';
+import type { Todo } from './types';
 
 // Reference to the list in index.html (DOM + typecasting)
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
 const categoryFilter = document.getElementById('category-filter') as HTMLDivElement;
+const statusFilter = document.getElementById('status-filter') as HTMLDivElement;
 
 // "work" → "Work"
 const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
@@ -15,8 +18,10 @@ const label = (text: string): string => text.charAt(0).toUpperCase() + text.slic
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
-  renderCategoryFilter();
-  filterByCategory(todos, getActiveCategory()).forEach(todo => {
+   renderCategoryFilter();
+  const inCategory = filterByCategory(todos, getActiveCategory());
+  renderStatusFilter(inCategory);
+  filterByStatus(inCategory, getActiveStatus()).forEach(todo => {
     const li = document.createElement('li');
     const status = getDueStatus(todo);
     li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'}${todo.completed ? ' completed' : ''}`;
@@ -82,5 +87,22 @@ const renderCategoryFilter = (): void => {
       renderTodos();
     });
     categoryFilter.appendChild(button);
+  });
+};
+// Draws the status tabs (All / Active / Completed) for the todos of the chosen category.
+const renderStatusFilter = (list: Todo[]): void => {
+  statusFilter.innerHTML = '';
+  STATUSES.forEach(status => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `status-tab${status === getActiveStatus() ? ' active' : ''}`;
+    button.dataset.status = status;
+    button.setAttribute('aria-pressed', String(status === getActiveStatus()));
+    button.textContent = `${label(status)} · ${countByStatus(list, status)}`;
+    button.addEventListener('click', () => {
+      setActiveStatus(status);
+      renderTodos();
+    });
+    statusFilter.appendChild(button);
   });
 };
