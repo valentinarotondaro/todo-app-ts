@@ -1,5 +1,6 @@
 import { todos, removeTodo, editTodo } from './todos';
 import { getDueStatus } from './features/dueDate';
+import { sortByPriority, getPriority } from './features/priority';
 import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setActiveCategory } from './features/categories';
 import type { CategoryFilter } from './features/categories';
 
@@ -11,17 +12,19 @@ const categoryFilter = document.getElementById('category-filter') as HTMLDivElem
 const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
 
 // Updates the DOM so it shows the current list of todos.
+// First filter by category, then sort by priority (high first).
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
-    renderCategoryFilter();
-  filterByCategory(todos, getActiveCategory()).forEach(todo => {
-        const li = document.createElement('li');
+  renderCategoryFilter();
+  sortByPriority(filterByCategory(todos, getActiveCategory())).forEach(todo => {
+    const li = document.createElement('li');
     const status = getDueStatus(todo);
-        li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'}`;
+    li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'} priority-${getPriority(todo)}`;
     li.innerHTML = `
       <span>${todo.text}</span>
-            <small class="category-tag">${label(todo.category ?? 'personal')}</small>
+      <small class="category-tag">${label(todo.category ?? 'personal')}</small>
+      <small class="priority-tag">${label(getPriority(todo))}</small>
       ${todo.dueDate ? `<small class="due-date">Due: ${todo.dueDate}${status === 'overdue' ? ' (overdue)' : ''}</small>` : ''}
       <button>Remove</button>
       <button id="editBtn">Edit</button>
@@ -54,6 +57,7 @@ const addEditButtonListener = (li: HTMLLIElement, id: number): void => {
     }
   });
 };
+
 // Draws the filter tabs: All + one per category, each with its number of todos.
 const renderCategoryFilter = (): void => {
   categoryFilter.innerHTML = '';

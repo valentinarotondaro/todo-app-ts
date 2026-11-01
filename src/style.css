@@ -204,3 +204,23 @@ h1 {
   flex: 1 1 0;
   width: auto;
 }
+/* === Priority (Alexa) === */
+.priority-tag {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  margin-left: 0.4rem;
+  background: #eee;
+  color: #555;
+}
+
+.todo-item.priority-high .priority-tag {
+  background: #d93025;
+  color: #fff;
+  font-weight: bold;
+}
+
+.todo-item.priority-low .priority-tag {
+  background: transparent;
+  color: #999;
+}
