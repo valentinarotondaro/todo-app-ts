@@ -1,4 +1,5 @@
 import './style.css';
+import './theme.css';
 import { addTodo, todos } from './todos';
 import { validateTodoText } from './features/validation';
 import { renderTodos } from './render';
@@ -11,7 +12,6 @@ const errorMessage = document.getElementById('error-message') as HTMLParagraphEl
 const dueDateInput = document.getElementById('due-date-input') as HTMLInputElement;
 const categoryInput = document.getElementById('category-input') as HTMLSelectElement;
 
-// Form submit: validate the input, add the todo and update the list.
 // Form submit: validate the input, add the todo and update the list.
 todoForm.addEventListener('submit', (event: Event) => {
   event.preventDefault();
@@ -30,27 +30,6 @@ todoForm.addEventListener('submit', (event: Event) => {
     todoInput.classList.add('input-error');
     errorMessage.style.display = 'block';
   }
-});
-
-// Color picker: changes the background color of the page.
-const changeBackgroundColor = (color: string): void => {
-  document.body.style.backgroundColor = color;
-};
-
-const initializeColorPicker = (): void => {
-  const colorPicker = document.getElementById('colorPicker') as HTMLInputElement;
-  if (colorPicker) {
-    colorPicker.addEventListener('input', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      changeBackgroundColor(target.value);
-    });
-  } else {
-    console.error('Color picker element not found');
-  }
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-  initializeColorPicker();
 });
 
 // Initial render

@@ -1,0 +1,115 @@
+/* === UI base (Valen): the look from the prototypes === */
+:root {
+  --ink: #141414;
+  --muted: #5c5a55;
+  --line: #e2e0da;
+  --ground: #f4f3ef;
+  --surface: #ffffff;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: var(--ground);
+  color: var(--ink);
+  height: auto;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding: 48px 16px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 28px;
+  border-radius: 24px;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0 0 20px;
+  text-align: left;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Form */
+.todo-form input,
+#category-input {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface);
+  box-sizing: border-box;
+}
+
+.todo-form button {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  font: inherit;
+  font-weight: 600;
+}
+
+/* List */
+#todo-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo-item {
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 0;
+  border-radius: 16px;
+}
+
+.todo-item span {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.todo-item .toggle {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--ink);
+}
+
+.todo-item button {
+  height: 32px;
+  padding: 0 8px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+}
+
+.todo-item button:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.due-date {
+  font-size: 12px;
+}
+
+/* Keyboard focus, visible on every control */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
