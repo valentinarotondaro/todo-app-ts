@@ -2,12 +2,14 @@ import './style.css';
 import { addTodo, todos } from './todos';
 import { validateTodoText } from './features/validation';
 import { renderTodos } from './render';
+import type { Category } from './types';
 
 // References to the HTML elements (DOM + typecasting)
 const todoInput = document.getElementById('todo-input') as HTMLInputElement;
 const todoForm = document.querySelector('.todo-form') as HTMLFormElement;
 const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
 const dueDateInput = document.getElementById('due-date-input') as HTMLInputElement;
+const categoryInput = document.getElementById('category-input') as HTMLSelectElement;
 
 // Form submit: validate the input, add the todo and update the list.
 // Form submit: validate the input, add the todo and update the list.
@@ -19,7 +21,7 @@ todoForm.addEventListener('submit', (event: Event) => {
   if (result.valid) {
     todoInput.classList.remove('input-error');
     errorMessage.style.display = 'none';
-    addTodo(text, dueDateInput.value || undefined);
+    addTodo(text, dueDateInput.value || undefined, categoryInput.value as Category);
     renderTodos();
     todoInput.value = '';
     dueDateInput.value = '';

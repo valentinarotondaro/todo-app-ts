@@ -1,16 +1,18 @@
-import type { Todo } from './types';
+import type { Todo, Category } from './types';
 import { loadTodos, saveTodos } from './storage';
 // The list of todos. This is the "state" of the app.
 export let todos: Todo[] = loadTodos();
 
 // Creates a new todo and adds it to the list.
 // dueDate is optional: a todo can have no due date.
-export const addTodo = (text: string, dueDate?: string): Todo => {
+// category is optional: a todo can have no category.
+export const addTodo = (text: string, dueDate?: string, category: Category = 'personal'): Todo => {
   const newTodo: Todo = {
     id: Date.now(), // Unique id based on the current timestamp
     text: text,
     completed: false,
     dueDate: dueDate,
+    category: category,
   };
   todos.push(newTodo);
     saveTodos(todos);

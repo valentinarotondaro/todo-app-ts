@@ -1,29 +1,36 @@
 import { todos, removeTodo, editTodo } from './todos';
 import { getDueStatus } from './features/dueDate';
 import { toggleTodo } from './features/toggle';
-
+import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setActiveCategory } from './features/categories';
+import type { CategoryFilter } from './features/categories';
 
 // Reference to the list in index.html (DOM + typecasting)
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
+const categoryFilter = document.getElementById('category-filter') as HTMLDivElement;
+
+// "work" → "Work"
+const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
 
 // Updates the DOM so it shows the current list of todos.
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
-  todos.forEach(todo => {
-        const li = document.createElement('li');
+  renderCategoryFilter();
+  filterByCategory(todos, getActiveCategory()).forEach(todo => {
+    const li = document.createElement('li');
     const status = getDueStatus(todo);
-        li.className = `todo-item due-${status}${todo.completed ? ' completed' : ''}`;
+    li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'}${todo.completed ? ' completed' : ''}`;
     li.innerHTML = `
-          <input type="checkbox" class="toggle" ${todo.completed ? 'checked' : ''} />
+      <input type="checkbox" class="toggle" ${todo.completed ? 'checked' : ''} />
       <span>${todo.text}</span>
+      <small class="category-tag">${label(todo.category ?? 'personal')}</small>
       ${todo.dueDate ? `<small class="due-date">Due: ${todo.dueDate}${status === 'overdue' ? ' (overdue)' : ''}</small>` : ''}
       <button>Remove</button>
       <button id="editBtn">Edit</button>
     `;
     addRemoveButtonListener(li, todo.id);
     addEditButtonListener(li, todo.id);
-        addToggleListener(li, todo.id);
+    addToggleListener(li, todo.id);
     todoList.appendChild(li);
   });
 };
@@ -50,11 +57,30 @@ const addEditButtonListener = (li: HTMLLIElement, id: number): void => {
     }
   });
 };
+
 // Connects the checkbox of one list item.
 const addToggleListener = (li: HTMLLIElement, id: number): void => {
   const checkbox = li.querySelector('.toggle') as HTMLInputElement;
   checkbox.addEventListener('change', () => {
     toggleTodo(id);
     renderTodos();
+  });
+};
+
+// Draws the filter tabs: All + one per category, each with its number of todos.
+const renderCategoryFilter = (): void => {
+  categoryFilter.innerHTML = '';
+  const filters: CategoryFilter[] = ['all', ...CATEGORIES];
+  filters.forEach(filter => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `filter-pill${filter === getActiveCategory() ? ' active' : ''}`;
+    button.dataset.category = filter;
+    button.innerHTML = `${label(filter)} <span class="count">${countByCategory(todos, filter)}</span>`;
+    button.addEventListener('click', () => {
+      setActiveCategory(filter);
+      renderTodos();
+    });
+    categoryFilter.appendChild(button);
   });
 };

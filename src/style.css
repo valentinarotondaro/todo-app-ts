@@ -123,3 +123,88 @@ h1 {
   text-decoration: line-through;
   opacity: 0.6;
 }
+/* === Categories (Valen) === */
+#category-input {
+  height: 44px;
+  border: 1px solid #e2e0da;
+  border-radius: 12px;
+  padding: 0 10px;
+  font: inherit;
+  background: #fff;
+}
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0 12px;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #e2e0da;
+  border-radius: 999px;
+  background: #fff;
+  color: #141414;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.filter-pill .count {
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 11px;
+  background: #eeece7;
+}
+
+.filter-pill[data-category="work"] .count { background: #e4daf8; color: #3a2c70; }
+.filter-pill[data-category="personal"] .count { background: #f9d9eb; color: #7a2559; }
+.filter-pill[data-category="study"] .count { background: #d6e4fc; color: #1a4485; }
+.filter-pill[data-category="home"] .count { background: #f7eba6; color: #514400; }
+
+.filter-pill.active { background: #141414; color: #fff; border-color: #141414; }
+.filter-pill.active .count { background: #fff; color: #141414; }
+
+.todo-item.cat-work { background: #e4daf8; }
+.todo-item.cat-personal { background: #f9d9eb; }
+.todo-item.cat-study { background: #d6e4fc; }
+.todo-item.cat-home { background: #f7eba6; }
+
+.category-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cat-work .category-tag { color: #3a2c70; }
+.cat-personal .category-tag { color: #7a2559; }
+.cat-study .category-tag { color: #1a4485; }
+.cat-home .category-tag { color: #514400; }
+/* Form: todo text on its own row, date + category + Add below */
+.todo-form {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.todo-form #todo-input {
+  flex: 1 1 100%;
+}
+
+#category-input {
+  flex: 1 1 auto;
+}
+
+.category-tag {
+  margin-left: 8px;
+}
+.todo-form #due-date-input,
+#category-input {
+  flex: 1 1 0;
+  width: auto;
+}
