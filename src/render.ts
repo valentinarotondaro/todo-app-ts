@@ -15,8 +15,10 @@ const statusFilter = document.getElementById('status-filter') as HTMLDivElement;
 // "work" → "Work"
 const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
 
-// Updates the DOM so it shows the current list of todos.
-// First filter by category, then by status, then sort by priority (high first).
+/**
+ * Draws the filters and the list of todos in the DOM.
+ * The list is first filtered by category, then by status, and then sorted by priority (high first).
+ */
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
