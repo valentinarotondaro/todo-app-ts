@@ -118,7 +118,11 @@ h1 {
   flex: 0 0 auto;
   width: 9.5rem;
 }
-
+/* === Toggle (Valen) === */
+.todo-item.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
 /* === Categories (Valen) === */
 #category-input {
   height: 44px;
@@ -245,4 +249,32 @@ h1 {
 /* Let the dropdowns shrink so the date input keeps its width */
 .todo-form select {
   min-width: 0;
+}
+/* === Status filter (Valen) === */
+.status-filter {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  margin-bottom: 12px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #e6e4de;
+}
+
+.status-tab {
+  height: 34px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #4a4843;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.status-tab.active {
+  background: #fff;
+  color: #141414;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
