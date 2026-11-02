@@ -27,8 +27,7 @@ export const setActiveCategory = (filter: CategoryFilter): void => {
  * @returns A new filtered list (the original list is not changed).
  */
 export const filterByCategory = (todos: Todo[], filter: CategoryFilter): Todo[] =>
-  filter === 'all' ? todos : todos.filter(todo => todo.category === filter);
-
+  filter === 'all' ? todos : todos.filter(todo => (todo.category ?? 'personal') === filter);
 /**
  * Counts the todos in a category.
  * @param todos - The full list of todos.

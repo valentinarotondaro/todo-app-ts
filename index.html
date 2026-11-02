@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MinTask – Todo App</title>
+    <title>MinTask</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="container">
-      <h1>Todo App</h1>
+      <h1>MinTask</h1>
       <form class="todo-form">
         <input type="text" id="todo-input" placeholder="Add a new todo" />
         <input type="date" id="due-date-input" />
@@ -18,13 +21,18 @@
   <option value="study">Study</option>
   <option value="home">Home</option>
 </select>
+        <select id="priority-input" aria-label="Priority">
+          <option value="high">High</option>
+          <option value="medium" selected>Medium</option>
+          <option value="low">Low</option>
+        </select>
         <button type="submit">Add</button>
       </form>
       <p id="error-message">Please enter a todo item</p>
       <div id="category-filter" class="category-filter"></div>
+      <div id="status-filter" class="status-filter" role="group" aria-label="Filter by status"></div>
       <ul class="todo-list" id="todo-list"></ul>
 
-      <input type="color" id="colorPicker" />
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

@@ -1,14 +1,27 @@
-// The Todo interface describes the shape of one todo item.
+/**
+ * One todo item.
+ * The optional properties (`?`) are optional so todos saved before a feature existed still load.
+ */
 export interface Todo {
+  /** Unique id, based on the time the todo was created. */
   id: number;
+  /** The text the user typed. */
   text: string;
+  /** True when the todo is marked as done. */
   completed: boolean;
-  dueDate?: string; // NEW: optional due date, format YYYY-MM-DD
-  category?: Category; // optional so old saved todos still load
+  /** Optional due date in the format YYYY-MM-DD. */
+  dueDate?: string;
+  /** The category of the todo. Old todos without category count as personal. */
+  category?: Category;
+  /** The priority of the todo. Old todos without priority count as medium. */
+  priority?: Priority;
 }
 
-// NEW: the possible states of a due date (type alias + union type).
+/** The possible states of a due date (type alias + union type). */
 export type DueStatus = 'none' | 'upcoming' | 'overdue';
 
-// The categories a todo can belong to (type alias + union type).
+/** The categories a todo can belong to (type alias + union type). */
 export type Category = 'work' | 'personal' | 'study' | 'home';
+
+/** The priority levels of a todo (type alias + union type). */
+export type Priority = 'low' | 'medium' | 'high';

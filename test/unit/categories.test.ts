@@ -31,4 +31,8 @@ describe('categories', () => {
     expect(addTodo('Read a book', undefined, 'study').category).toBe('study');
     expect(addTodo('Water plants').category).toBe('personal');
   });
+    it('filterByCategory counts an old todo without category as personal', () => {
+    const oldTodo: Todo = { id: 9, text: 'Old todo', completed: false };
+    expect(filterByCategory([oldTodo], 'personal')).toHaveLength(1);
+  });
 });
