@@ -1,5 +1,6 @@
 import { todos, removeTodo, editTodo } from './todos';
 import { getDueStatus } from './features/dueDate';
+import { sortByPriority, getPriority } from './features/priority';
 import { toggleTodo } from './features/toggle';
 import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setActiveCategory } from './features/categories';
 import type { CategoryFilter } from './features/categories';
@@ -15,20 +16,22 @@ const statusFilter = document.getElementById('status-filter') as HTMLDivElement;
 const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
 
 // Updates the DOM so it shows the current list of todos.
+// First filter by category, then by status, then sort by priority (high first).
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
-   renderCategoryFilter();
+  renderCategoryFilter();
   const inCategory = filterByCategory(todos, getActiveCategory());
   renderStatusFilter(inCategory);
-  filterByStatus(inCategory, getActiveStatus()).forEach(todo => {
+  sortByPriority(filterByStatus(inCategory, getActiveStatus())).forEach(todo => {
     const li = document.createElement('li');
     const status = getDueStatus(todo);
-    li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'}${todo.completed ? ' completed' : ''}`;
+    li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'} priority-${getPriority(todo)}${todo.completed ? ' completed' : ''}`;
     li.innerHTML = `
       <input type="checkbox" class="toggle" ${todo.completed ? 'checked' : ''} />
       <span>${todo.text}</span>
       <small class="category-tag">${label(todo.category ?? 'personal')}</small>
+      <small class="priority-tag">${label(getPriority(todo))}</small>
       ${todo.dueDate ? `<small class="due-date">Due: ${todo.dueDate}${status === 'overdue' ? ' (overdue)' : ''}</small>` : ''}
       <button>Remove</button>
       <button id="editBtn">Edit</button>
@@ -89,6 +92,7 @@ const renderCategoryFilter = (): void => {
     categoryFilter.appendChild(button);
   });
 };
+
 // Draws the status tabs (All / Active / Completed) for the todos of the chosen category.
 const renderStatusFilter = (list: Todo[]): void => {
   statusFilter.innerHTML = '';
