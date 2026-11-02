@@ -19,6 +19,7 @@ Made by **Valentina Rotondaro** and **Alexa Cattaneo Piazza**.
 | Categories + filter by category | 9 | `features/categories.ts` |
 | Save todos in localStorage | 14 | `storage.ts` |
 | Input validation (empty, max 100 characters, no duplicates) | 16 | `features/validation.ts` |
+| Filter by status (All / Active / Completed) | 4 | `features/statusFilter.ts` |
 
 ## Tech stack
 
