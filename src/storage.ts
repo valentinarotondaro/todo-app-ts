@@ -35,8 +35,10 @@ export const loadFromStorage = <T>(key: string, fallback: T, isValid: (data: unk
   }
 };
 
-/** Type guard: true when the data is a list (the saved todos). */
-const isTodoList = (data: unknown): data is Todo[] => Array.isArray(data);
+/** Type guard: true when the data is a list and every item has an id and a text (a saved todo). */
+const isTodoList = (data: unknown): data is Todo[] =>
+  Array.isArray(data) &&
+  data.every(item => typeof item === 'object' && item !== null && 'id' in item && 'text' in item);
 
 /**
  * Saves the list of todos in localStorage.
