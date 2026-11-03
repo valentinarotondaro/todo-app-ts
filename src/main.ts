@@ -3,6 +3,7 @@ import './theme.css';
 import { addTodo, todos } from './todos';
 import { validateTodoText } from './features/validation';
 import { renderTodos } from './render';
+import { getGreeting, formatToday } from './features/greeting';
 import type { Category, Priority } from './types';
 
 // References to the HTML elements (DOM + typecasting)
@@ -32,6 +33,10 @@ todoForm.addEventListener('submit', (event: Event) => {
     errorMessage.style.display = 'block';
   }
 });
+// Greeting and today's date at the top of the board
+const now = new Date();
+(document.getElementById('greeting') as HTMLHeadingElement).textContent = getGreeting(now);
+(document.getElementById('today') as HTMLParagraphElement).textContent = formatToday(now);
 
 // Initial render
 renderTodos();
