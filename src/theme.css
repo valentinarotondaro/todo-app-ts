@@ -1,3 +1,4 @@
+/* Loaded after style.css (see main.ts), so these rules override the ones there. */
 :root {
   --ink: #141414;
   --muted: #5c5a55;
