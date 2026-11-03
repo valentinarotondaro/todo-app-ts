@@ -22,6 +22,11 @@ describe('storage', () => {
     localStorage.setItem('todos', 'not json');
     expect(loadTodos()).toEqual([]);
   });
+  
+  it('loadTodos returns an empty list when the items are not todos', () => {
+    localStorage.setItem('todos', JSON.stringify([1, 2, 3]));
+    expect(loadTodos()).toEqual([]);
+  });
 });
 
 describe('generic storage', () => {
