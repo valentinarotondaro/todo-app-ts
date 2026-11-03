@@ -6,6 +6,7 @@ import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setAc
 import type { CategoryFilter } from './features/categories';
 import { STATUSES, filterByStatus, countByStatus, getActiveStatus, setActiveStatus } from './features/statusFilter';
 import { getProgress } from './features/progress';
+import { filterBySearch, getSearchQuery } from './features/search';
 import type { Todo } from './types';
 
 // Reference to the list in index.html (DOM + typecasting)
@@ -16,6 +17,7 @@ const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
 const progressFill = document.getElementById('progress-fill') as HTMLDivElement;
 const progressLabel = document.getElementById('progress-label') as HTMLParagraphElement;
 const progressPercent = document.getElementById('progress-percent') as HTMLParagraphElement;
+const emptyMessage = document.getElementById('empty-message') as HTMLParagraphElement;
 
 
 // "work" → "Work"
@@ -23,16 +25,19 @@ const label = (text: string): string => text.charAt(0).toUpperCase() + text.slic
 
 /**
  * Draws the filters and the list of todos in the DOM.
- * The list is first filtered by category, then by status, and then sorted by priority (high first).
+  * The list is first filtered by category, then by the search text, then by status, and then sorted by priority (high first).
  */
 export const renderTodos = (): void => {
   todoList.innerHTML = '';
 
   renderCategoryFilter();
   const inCategory = filterByCategory(todos, getActiveCategory());
-  renderStatusFilter(inCategory);
-  renderProgress(inCategory)
-  sortByPriority(filterByStatus(inCategory, getActiveStatus())).forEach(todo => {
+    const matching = filterBySearch(inCategory, getSearchQuery());
+  renderStatusFilter(matching);
+  renderProgress(inCategory);
+  const visible = sortByPriority(filterByStatus(matching, getActiveStatus()));
+  emptyMessage.textContent = visible.length === 0 && getSearchQuery().trim() !== '' ? `No todos match "${getSearchQuery().trim()}"` : '';
+  visible.forEach(todo => {
     const li = document.createElement('li');
     const status = getDueStatus(todo);
     li.className = `todo-item due-${status} cat-${todo.category ?? 'personal'} priority-${getPriority(todo)}${todo.completed ? ' completed' : ''}`;
