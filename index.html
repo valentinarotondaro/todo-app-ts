@@ -4,10 +4,58 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bde-exam-template</title>
+    <title>MinTask</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="app"></div>
+      <div class="container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1>MinTask</h1>
+          <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">Dark mode</button>
+        </div>
+        <div class="progress">
+          <p class="progress-title">Total progress</p>
+          <p class="progress-percent" id="progress-percent">0%</p>
+          <div class="progress-track" id="progress-bar" role="progressbar" aria-label="Todos done" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <p class="progress-label" id="progress-label" aria-live="polite"></p>
+        </div>
+        <h2 class="section-title">New task</h2>
+        <form class="todo-form">
+          <input type="text" id="todo-input" placeholder="Add a new todo" />
+          <input type="date" id="due-date-input" aria-label="Due date" />
+          <select id="category-input" aria-label="Category">
+            <option value="work">Work</option>
+            <option value="personal" selected>Personal</option>
+            <option value="study">Study</option>
+            <option value="home">Home</option>
+          </select>
+          <select id="priority-input" aria-label="Priority">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+          <button type="submit">Add task</button>
+        </form>
+        <p id="error-message">Please enter a todo item</p>
+      </aside>
+
+      <main class="board">
+        <header class="board-header">
+          <h2 class="greeting" id="greeting">Hello!</h2>
+          <p class="today" id="today"></p>
+        </header>
+        <div id="category-filter" class="category-filter"></div>
+                <input type="search" id="search-input" class="search-input" placeholder="Search todos" aria-label="Search todos" />
+        <div id="status-filter" class="status-filter" role="group" aria-label="Filter by status"></div>
+        <ul class="todo-list" id="todo-list"></ul>
+                <p class="empty-message" id="empty-message"></p>
+      </main>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
