@@ -1,11 +1,19 @@
-/* === UI base (Valen): the look from the prototypes === */
 :root {
   --ink: #141414;
   --muted: #5c5a55;
   --line: #e2e0da;
-  --ground: #f4f3ef;
+  --ground: #efede7;
   --surface: #ffffff;
-}
+  --soft: #f4f3ef;
+
+    /* Accents from Projector: lime, pink, soft orange and stone */
+  --work: #cfdd6e;
+  --personal: #f5bce6;
+  --study: #e4e1d6;
+  --home: #ffbe9a;
+  --lime: #c9db5f;
+  --danger: #f0581f;
+  }
 
 body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -14,48 +22,194 @@ body {
   height: auto;
   min-height: 100vh;
   align-items: flex-start;
-  padding: 48px 16px;
+  padding: 40px 16px;
   box-sizing: border-box;
 }
 
+/* Two columns: tools on the left, the list on the right */
 .container {
   width: 100%;
-  max-width: 480px;
-  padding: 32px 28px;
-  border-radius: 24px;
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 16px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
   box-shadow: none;
   box-sizing: border-box;
+}
+
+.sidebar,
+.board {
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 28px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.sidebar {
+  align-self: start;
+  position: sticky;
+  top: 24px;
 }
 
 h1 {
   margin: 0 0 20px;
   text-align: left;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
-/* Form */
+.section-title {
+  margin: 24px 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Greeting + date, like "Good Morning, Rafael!" in Projector */
+.board-header {
+  margin-bottom: 20px;
+}
+
+.greeting {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.today {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Progress: a lime card with a big number, like "Total progress" in Projector */
+.progress {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: var(--lime);
+}
+
+.progress-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progress-percent {
+  margin: 2px 0 12px;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.progress-track {
+  height: 10px;
+  background: rgba(20, 20, 20, 0.15);
+}
+
+.progress-fill {
+  background: var(--ink);
+}
+
+.progress-label {
+  margin-top: 8px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Form: one field per row, category and priority side by side */
+.todo-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.todo-form #todo-input,
+.todo-form #due-date-input,
+.todo-form button {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
 .todo-form input,
-#category-input {
-  height: 44px;
+.todo-form select {
+  height: 46px;
+  width: 100%;
+  min-width: 0;
   padding: 0 14px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
+  background: var(--soft);
+  color: var(--ink);
   font: inherit;
   font-size: 15px;
-  color: var(--ink);
-  background: var(--surface);
   box-sizing: border-box;
 }
 
 .todo-form button {
-  height: 44px;
-  padding: 0 22px;
+  height: 48px;
+  margin-top: 4px;
   border-radius: 999px;
   background: var(--ink);
+  color: #fff;
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.todo-form button:hover {
+  background: #2c2c2c;
+}
+
+/* Category filter: white pills, the chosen one is black */
+.category-filter {
+  margin: 0 0 12px;
+  gap: 8px;
+}
+
+.filter-pill {
+  height: 38px;
+  border-color: var(--line);
+  font-weight: 500;
+}
+
+.filter-pill[data-category="work"] .count { background: var(--work); color: var(--ink); }
+.filter-pill[data-category="personal"] .count { background: var(--personal); color: var(--ink); }
+.filter-pill[data-category="study"] .count { background: var(--study); color: var(--ink); }
+.filter-pill[data-category="home"] .count { background: var(--home); color: var(--ink); }
+.filter-pill.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* Status tabs: black pill on the chosen one, like "To do 15" in Projector */
+.status-filter {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 0;
+  background: transparent;
+}
+
+.status-tab {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.status-tab:hover {
+  background: var(--soft);
+}
+
+.status-tab.active {
+  background: var(--ink);
+  color: #fff;
+  box-shadow: none;
 }
 
 /* List */
@@ -67,43 +221,122 @@ h1 {
   gap: 8px;
 }
 
+/* Todo row: checkbox | text with small tags below | buttons */
 .todo-item {
-  gap: 10px;
-  padding: 12px 14px;
-  border-bottom: 0;
-  border-radius: 16px;
+  display: grid;
+  grid-template-columns: auto auto auto 1fr auto auto;
+  column-gap: 8px;
+  row-gap: 6px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 20px;
 }
 
-.todo-item span {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 15px;
-  font-weight: 500;
-}
+.todo-item.cat-work { background: var(--work); }
+.todo-item.cat-personal { background: var(--personal); }
+.todo-item.cat-study { background: var(--study); }
+.todo-item.cat-home { background: var(--home); }
 
 .todo-item .toggle {
-  flex: none;
+  grid-column: 1;
+  grid-row: 1 / span 2;
   width: 20px;
   height: 20px;
+  margin: 0 6px 0 0;
   accent-color: var(--ink);
 }
 
-.todo-item button {
-  height: 32px;
-  padding: 0 8px;
+.todo-item span {
+  grid-column: 2 / 5;
+  grid-row: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Small tags, like Health / Study / Team in Tasky */
+.todo-item .category-tag,
+.todo-item .priority-tag,
+.todo-item .due-date {
+  grid-row: 2;
+  justify-self: start;
+  margin: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.todo-item .category-tag {
+  grid-column: 2;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+
+.todo-item .priority-tag {
+  grid-column: 3;
   background: transparent;
-  color: var(--muted);
+  border: 1px solid rgba(20, 20, 20, 0.35);
+  color: var(--ink);
+}
+
+.todo-item.priority-high .priority-tag {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.todo-item.priority-low .priority-tag {
+  border-style: dashed;
+  color: rgba(20, 20, 20, 0.7);
+}
+
+.todo-item .due-date {
+  grid-column: 4;
+  color: var(--ink);
+}
+
+.todo-item.due-overdue {
+  border-left: 0;
+  box-shadow: inset 0 0 0 2px var(--danger);
+}
+
+.todo-item.due-overdue .due-date {
+  background: var(--danger);
+  color: #fff;
+}
+
+.todo-item button {
+  grid-row: 1 / span 2;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--ink);
   font: inherit;
   font-size: 12px;
+  font-weight: 600;
 }
+
+.todo-item button:not(#editBtn) { grid-column: 5; }
+.todo-item #editBtn { grid-column: 6; }
 
 .todo-item button:hover {
-  color: var(--ink);
-  text-decoration: underline;
+  background: #fff;
 }
 
-.due-date {
-  font-size: 12px;
+.todo-item.completed {
+  opacity: 0.55;
+}
+
+/* Error message under the form */
+#error-message {
+  margin: 8px 0 0;
 }
 
 /* Keyboard focus, visible on every control */
@@ -113,18 +346,39 @@ select:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
-/* Todo row: text on top, category + due date below, buttons on the right */
-.todo-item {
-  display: grid;
-  grid-template-columns: auto auto 1fr auto auto;
-  column-gap: 10px;
-  row-gap: 4px;
-  align-items: center;
-}
 
-.todo-item .toggle { grid-column: 1; grid-row: 1 / span 2; }
-.todo-item span { grid-column: 2 / 4; grid-row: 1; }
-.todo-item .category-tag { grid-column: 2; grid-row: 2; margin-left: 0; }
-.todo-item .due-date { grid-column: 3; grid-row: 2; margin-left: 0; }
-.todo-item button:not(#editBtn) { grid-column: 4; grid-row: 1 / span 2; }
-.todo-item #editBtn { grid-column: 5; grid-row: 1 / span 2; }
+/* Small screens: one column */
+@media (max-width: 820px) {
+  body {
+    padding: 16px;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .sidebar,
+  .board {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .greeting {
+    font-size: 24px;
+  }
+
+  /* Todo row on a phone: text, then tags, then the buttons */
+  .todo-item {
+    grid-template-columns: auto auto auto 1fr;
+  }
+
+  .todo-item span { grid-column: 2 / -1; }
+  .todo-item .due-date { grid-column: 2 / -1; grid-row: 3; }
+  .todo-item button { grid-row: 4; justify-self: start; }
+  .todo-item button:not(#editBtn) { grid-column: 2; }
+  .todo-item #editBtn { grid-column: 3; }
+}

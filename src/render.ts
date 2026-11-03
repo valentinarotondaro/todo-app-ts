@@ -15,6 +15,8 @@ const statusFilter = document.getElementById('status-filter') as HTMLDivElement;
 const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
 const progressFill = document.getElementById('progress-fill') as HTMLDivElement;
 const progressLabel = document.getElementById('progress-label') as HTMLParagraphElement;
+const progressPercent = document.getElementById('progress-percent') as HTMLParagraphElement;
+
 
 // "work" → "Work"
 const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
@@ -122,5 +124,6 @@ const renderProgress = (list: Todo[]): void => {
   const { done, total, percent } = getProgress(list);
   progressFill.style.width = `${percent}%`;
   progressBar.setAttribute('aria-valuenow', String(percent));
-  progressLabel.textContent = total === 0 ? 'No todos yet' : `${done} of ${total} done · ${percent}%`;
+  progressPercent.textContent = `${percent}%`;
+ progressLabel.textContent = total === 0 ? 'No todos yet' : `${done} of ${total} done`;
 };
