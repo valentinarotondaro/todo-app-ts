@@ -12,6 +12,12 @@
   <body>
     <div class="container">
       <h1>MinTask</h1>
+            <div class="progress">
+        <div class="progress-track" id="progress-bar" role="progressbar" aria-label="Todos done" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="progress-label" id="progress-label"></p>
+      </div>
       <form class="todo-form">
         <input type="text" id="todo-input" placeholder="Add a new todo" />
         <input type="date" id="due-date-input" />

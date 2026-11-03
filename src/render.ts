@@ -5,12 +5,16 @@ import { toggleTodo } from './features/toggle';
 import { CATEGORIES, filterByCategory, countByCategory, getActiveCategory, setActiveCategory } from './features/categories';
 import type { CategoryFilter } from './features/categories';
 import { STATUSES, filterByStatus, countByStatus, getActiveStatus, setActiveStatus } from './features/statusFilter';
+import { getProgress } from './features/progress';
 import type { Todo } from './types';
 
 // Reference to the list in index.html (DOM + typecasting)
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
 const categoryFilter = document.getElementById('category-filter') as HTMLDivElement;
 const statusFilter = document.getElementById('status-filter') as HTMLDivElement;
+const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
+const progressFill = document.getElementById('progress-fill') as HTMLDivElement;
+const progressLabel = document.getElementById('progress-label') as HTMLParagraphElement;
 
 // "work" → "Work"
 const label = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
@@ -25,6 +29,7 @@ export const renderTodos = (): void => {
   renderCategoryFilter();
   const inCategory = filterByCategory(todos, getActiveCategory());
   renderStatusFilter(inCategory);
+  renderProgress(inCategory)
   sortByPriority(filterByStatus(inCategory, getActiveStatus())).forEach(todo => {
     const li = document.createElement('li');
     const status = getDueStatus(todo);
@@ -111,4 +116,11 @@ const renderStatusFilter = (list: Todo[]): void => {
     });
     statusFilter.appendChild(button);
   });
+};
+// Updates the progress bar for the todos of the chosen category.
+const renderProgress = (list: Todo[]): void => {
+  const { done, total, percent } = getProgress(list);
+  progressFill.style.width = `${percent}%`;
+  progressBar.setAttribute('aria-valuenow', String(percent));
+  progressLabel.textContent = total === 0 ? 'No todos yet' : `${done} of ${total} done · ${percent}%`;
 };
