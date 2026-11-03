@@ -32,4 +32,3 @@ test('Dark mode stays after reloading the page', async t => {
   // Assert
   await t.expect(html.getAttribute('data-theme')).eql('dark');
 });
-npm run dev -- --host 127.0.0.1
