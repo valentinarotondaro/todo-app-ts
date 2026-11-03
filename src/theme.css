@@ -167,7 +167,30 @@ h1 {
 .todo-form button:hover {
   background: #2c2c2c;
 }
+/* Search: a rounded field, like the search bar in Projector */
+.search-input {
+  width: 100%;
+  height: 44px;
+  margin-bottom: 14px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  box-sizing: border-box;
+}
 
+.empty-message {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.empty-message:empty {
+  display: none;
+}
 /* Category filter: white pills, the chosen one is black */
 .category-filter {
   margin: 0 0 12px;

@@ -4,6 +4,7 @@ import { addTodo, todos } from './todos';
 import { validateTodoText } from './features/validation';
 import { renderTodos } from './render';
 import { getGreeting, formatToday } from './features/greeting';
+import { setSearchQuery } from './features/search';
 import type { Category, Priority } from './types';
 
 // References to the HTML elements (DOM + typecasting)
@@ -37,6 +38,11 @@ todoForm.addEventListener('submit', (event: Event) => {
 const now = new Date();
 (document.getElementById('greeting') as HTMLHeadingElement).textContent = getGreeting(now);
 (document.getElementById('today') as HTMLParagraphElement).textContent = formatToday(now);
-
+// Search: filter the list while the user types
+const searchInput = document.getElementById('search-input') as HTMLInputElement;
+searchInput.addEventListener('input', () => {
+  setSearchQuery(searchInput.value);
+  renderTodos();
+});
 // Initial render
 renderTodos();
