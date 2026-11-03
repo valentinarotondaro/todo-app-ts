@@ -20,6 +20,7 @@ Made by **Valentina Rotondaro** and **Alexa Cattaneo Piazza**.
 | Save todos in localStorage | 14 | `storage.ts` |
 | Input validation (empty, max 100 characters, no duplicates) | 16 | `features/validation.ts` |
 | Filter by status (All / Active / Completed) | 4 | `features/statusFilter.ts` |
+| Progress bar (follows the category filter) | 10 | `features/progress.ts` |
 
 ## Tech stack
 
