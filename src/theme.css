@@ -56,8 +56,30 @@ body {
   top: 24px;
 }
 
+/* Logo + dark mode button on one row */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 h1 {
-  margin: 0 0 20px;
+  margin: 0;
   text-align: left;
   font-size: 26px;
   font-weight: 800;
@@ -154,18 +176,26 @@ h1 {
   box-sizing: border-box;
 }
 
+/* The dropdowns have their own colors in style.css (ids win), so set them here too */
+.todo-form #category-input,
+.todo-form #priority-input {
+  border-color: var(--line);
+  background: var(--soft);
+  color: var(--ink);
+}
+
 .todo-form button {
   height: 48px;
   margin-top: 4px;
   border-radius: 999px;
   background: var(--ink);
-  color: #fff;
+  color: var(--surface);
   font: inherit;
   font-weight: 700;
 }
 
 .todo-form button:hover {
-  background: #2c2c2c;
+  opacity: 0.85;
 }
 /* Search: a rounded field, like the search bar in Projector */
 .search-input {
@@ -200,14 +230,18 @@ h1 {
 .filter-pill {
   height: 38px;
   border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
   font-weight: 500;
 }
 
-.filter-pill[data-category="work"] .count { background: var(--work); color: var(--ink); }
-.filter-pill[data-category="personal"] .count { background: var(--personal); color: var(--ink); }
-.filter-pill[data-category="study"] .count { background: var(--study); color: var(--ink); }
-.filter-pill[data-category="home"] .count { background: var(--home); color: var(--ink); }
-.filter-pill.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.filter-pill .count { background: var(--soft); color: var(--ink); }
+.filter-pill[data-category="work"] .count { background: var(--work); color: #141414; }
+.filter-pill[data-category="personal"] .count { background: var(--personal); color: #141414; }
+.filter-pill[data-category="study"] .count { background: var(--study); color: #141414; }
+.filter-pill[data-category="home"] .count { background: var(--home); color: #141414; }
+.filter-pill.active { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.filter-pill.active .count { background: var(--surface); color: var(--ink); }
 
 /* Status tabs: black pill on the chosen one, like "To do 15" in Projector */
 .status-filter {
@@ -232,7 +266,7 @@ h1 {
 
 .status-tab.active {
   background: var(--ink);
-  color: #fff;
+  color: var(--surface);
   box-shadow: none;
 }
 
@@ -369,6 +403,30 @@ input:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
+}
+
+/* === Dark mode (Alexa) === */
+/* Only the variables change: every rule that uses var(--ink), var(--surface)... follows */
+:root[data-theme="dark"] {
+  --ink: #f2f1ec;
+  --muted: #a9a69e;
+  --line: #34332f;
+  --ground: #111110;
+  --surface: #1c1c1a;
+  --soft: #272725;
+  color-scheme: dark;
+}
+
+/* The colored cards keep dark text, so they stay readable */
+:root[data-theme="dark"] .todo-item,
+:root[data-theme="dark"] .progress {
+  --ink: #141414;
+  --muted: #3d3c38;
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .todo-item.completed {
+  opacity: 0.75;
 }
 
 /* Small screens: one column */

@@ -21,6 +21,8 @@ Made by **Valentina Rotondaro** and **Alexa Cattaneo Piazza**.
 | Input validation (empty, max 100 characters, no duplicates) | 16 | `features/validation.ts` |
 | Filter by status (All / Active / Completed) | 4 | `features/statusFilter.ts` |
 | Progress bar (follows the category filter) | 10 | `features/progress.ts` |
+| Search todos by text | 8 | `features/search.ts` |
+| Dark mode toggle (saved with generic storage helpers) | 11 | `features/theme.ts`, `storage.ts` |
 
 ## Tech stack
 
