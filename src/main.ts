@@ -1,4 +1,6 @@
 import './style.css';
+import { getNextTheme, loadTheme, saveTheme } from './features/theme';
+import type { Theme } from './features/theme';
 import './theme.css';
 import { addTodo, todos } from './todos';
 import { validateTodoText } from './features/validation';
@@ -44,5 +46,20 @@ searchInput.addEventListener('input', () => {
   setSearchQuery(searchInput.value);
   renderTodos();
 });
+// Dark mode: the theme is a data attribute on <html>, the CSS does the rest
+const themeToggle = document.getElementById('theme-toggle') as HTMLButtonElement;
+const applyTheme = (theme: Theme): void => {
+  document.documentElement.dataset.theme = theme;
+  themeToggle.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+  themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+};
+let theme: Theme = loadTheme();
+applyTheme(theme);
+themeToggle.addEventListener('click', () => {
+  theme = getNextTheme(theme);
+  saveTheme(theme);
+  applyTheme(theme);
+});
+
 // Initial render
 renderTodos();
